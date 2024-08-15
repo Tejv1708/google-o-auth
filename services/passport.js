@@ -21,7 +21,7 @@ console.log("google client id : " , process.env.googleClientID)
 passport.use(new GoogleStrategy({
     clientID : process.env.googleClientID_prod,
     clientSecret : process.env.googleClientSecret_prod,
-    callbackURL : 'https://google-o-auth.onrender.com/auth/google/callback',
+    callbackURL : '/auth/google/callback',
     proxy : true
 } ,  (accessToken , refreshToken , profile , done) => {
     User.findOne({googleId : profile.id}).then((existingUser) => {
