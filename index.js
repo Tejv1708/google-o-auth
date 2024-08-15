@@ -25,4 +25,4 @@ app.use('/' , authRoutes)
 
 const PORT = process.env.PORT || 5000
 app.listen(5000)
-mongoose.connect(process.env.mongo_url)
+mongoose.connect(process.env.mongo_url_dev)
