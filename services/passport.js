@@ -21,7 +21,7 @@ passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.googleClientID_prod,
-      clientSecret: process.env.googleClientSecret_pord,
+      clientSecret: process.env.googleClientSecret_prod,
       callbackURL: "/auth/google/callback",
       proxy : true 
     },
