@@ -1,41 +1,42 @@
-import passport from 'passport'
-import GoogleStrategy from 'passport-google-oauth20'
-import dotenv from 'dotenv'
-import User from '../models/User.js'
+import passport from "passport";
+import GoogleStrategy from "passport-google-oauth20";
+import dotenv from "dotenv";
+import User from "../models/User.js";
 
+dotenv.config();
 
-dotenv.config()
+passport.serializeUser((user, done) => {
+  console.log(user)
+  done(null, user.id);
+});
 
-passport.serializeUser((user , done) =>{
-    done(null , user.id)
-} ) 
-
-passport.deserializeUser((id , done) => {
+passport.deserializeUser((id, done) => {
+  console.log(id)
   User.findById(id).then((user) => {
-    done(null , user)
-  })
-})
+    done(null, user);
+  });
+});
 
-console.log("google client id : " , process.env.googleClientID)
-
-passport.use(new GoogleStrategy({
-    clientID : process.env.googleClientID_prod,
-    clientSecret : process.env.googleClientSecret_prod,
-    callbackURL : '/auth/google/callback',
-    proxy : true
-} ,  (accessToken , refreshToken , profile , done) => {
-    User.findOne({googleId : profile.id}).then((existingUser) => {
-   if(existingUser){
-    // we already have a record with given profile Id 
-    done(null , existingUser)
-   }else{
-    // we don't have a user record with this Id , make a new record
-    new User ({
-        googleId: profile.id
-    }).save().then(user => done(null , user))
-   }
-    }) 
- 
-
-}) 
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.googleClientID,
+      clientSecret: process.env.googleClientSecret,
+      callbackURL: "/auth/google/callback",
+      proxy : true 
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      const existingUser = await User.findOne({ googleId: profile.id });
+  
+      if (existingUser) {
+        done(null, existingUser);
+      }
+   const user = await new User({
+          googleId: profile.id,
+        }).save()
+        done(null , user)
+          
+      }
+    
+  )
 );

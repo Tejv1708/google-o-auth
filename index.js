@@ -6,6 +6,7 @@ import './models/User.js'
 import './services/passport.js'
 import cookieSession from 'cookie-session'
 import passport from 'passport'
+import cors from 'cors'
 // 
 const app = express()
 app.use(
@@ -15,8 +16,13 @@ app.use(
     })
 )
 
+app.get('/survey' , (req , res) => {
+    return res.send("Hii Naruka")
+})
+
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(cors({origin : "http://localhost:5173/" , methods : "GET POST PUT DELETE" , credentials:true}))
 
 dotenv.config()
 

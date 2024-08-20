@@ -1,21 +1,27 @@
-import passport from "passport"
-import express from "express"
+import passport from "passport";
+import express from "express";
 
-const router = express.Router()
-router.get('/auth/google' , passport.authenticate('google' , {
-    scope : ['profile' , 'email']
-}))
+const router = express.Router();
 
-router.get('/auth/google/callback' , passport.authenticate('google'))
+router.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
+);
 
-router.get('/api/logout' , (req , res ) => {
-    req.logout()
-    res.send(req.user)
-})
+router.get("/auth/google/callback", passport.authenticate("google") , (req , res) => {
+    res.redirect('/survey')
+});
 
-router.get('/api/current_user', (req , res) => {
-res.send(req.user);
-console.log(req.user)
-})
+router.get("/api/logout", (req, res) => {
+  req.logout();
+  res.send(req.user);
+});
 
-export default router
+router.get("/api/current_user", (req, res) => {
+  res.send(req.user);
+  console.log(req.user);
+});
+
+export default router;
