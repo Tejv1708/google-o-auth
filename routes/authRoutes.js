@@ -10,8 +10,10 @@ router.get(
   })
 );
 
-router.get("/auth/google/callback", passport.authenticate("google") , (req , res) => {
-    res.redirect('/survey')
+router.get("/auth/google/callback",
+   passport.authenticate("google") ,
+    (req , res) => {
+      res.redirect(`http://localhost:5173/dashboard`);
 });
 
 router.get("/api/logout", (req, res) => {
@@ -20,8 +22,9 @@ router.get("/api/logout", (req, res) => {
 });
 
 router.get("/api/current_user", (req, res) => {
-  res.send(req.user);
-  console.log(req.user);
+  return res.status(201).json(req.user);
 });
+
+
 
 export default router;

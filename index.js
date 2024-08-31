@@ -7,18 +7,16 @@ import './services/passport.js'
 import cookieSession from 'cookie-session'
 import passport from 'passport'
 import cors from 'cors'
+import {createProxyMiddleware} from 'http-proxy-middleware'
 // 
 const app = express()
+
 app.use(
     cookieSession({
         maxAge : 30*24*60*60*1000,
         keys : [process.env.cookieKey]
     })
 )
-
-app.get('/survey' , (req , res) => {
-    return res.send("Hii Naruka")
-})
 
 app.use(passport.initialize())
 app.use(passport.session())

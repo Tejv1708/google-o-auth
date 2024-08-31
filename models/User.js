@@ -2,7 +2,9 @@
 
 const userSchema = new mongoose.Schema({
     googleId : String ,
-    name : String
+    userName : String ,
+    email : String , 
+    photos : String 
 })
 
 
