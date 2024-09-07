@@ -1,7 +1,9 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import authRoutes from './routes/authRoutes.js'
+import billingRoutes from './routes/billingRoutes.js'
 import mongoose from 'mongoose'
+import bodyParser from 'body-parser'
 import './models/User.js'
 import './services/passport.js'
 import cookieSession from 'cookie-session'
@@ -10,6 +12,8 @@ import cors from 'cors'
 import {createProxyMiddleware} from 'http-proxy-middleware'
 // 
 const app = express()
+
+app.use(bodyParser.json())
 
 app.use(
     cookieSession({
@@ -26,6 +30,7 @@ dotenv.config()
 
 // Routing 
 app.use('/' , authRoutes)
+app.use('/' , billingRoutes)
 
 const PORT = process.env.PORT || 5000
 app.listen(5000)

@@ -23,6 +23,19 @@ export const fetchUser = createAsyncThunk(
 }
 )
 
+export const logOutUser = createAsyncThunk(
+    'auth/logout' ,
+    async(_,thunkAPI) => {
+        try{
+         await axios.get('/api/logout')   
+        }catch(err){
+            console.log('Error Occured ' , err);
+            return thunkAPI.rejectWithValue(err.response.data.error)
+
+        }
+    }
+)
+
 const authSlice = createSlice(
     {
         name : 'auth',
@@ -41,6 +54,18 @@ const authSlice = createSlice(
             .addCase(fetchUser.rejected , (state , action) => {
                 state.isLoading= false
                 state.error = action.error.message 
+            })
+            .addCase(logOutUser.pending , (state ) => {
+                state.isLoading = true 
+            })
+            .addCase(logOutUser.fulfilled , (state , action) => {
+                state.isLoading = false 
+                state.userInfo = null ;
+                state.error = null ;
+            })
+            .addCase(logOutUser.rejected , (state , action ) => {
+                state.isLoading = false ;
+                state.error =  action.error.message
             })
         }
     }
