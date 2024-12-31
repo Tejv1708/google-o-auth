@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import authRoutes from './routes/authRoutes.js'
+import todoRoutes from './routes/todoRoutes.js'
 import mongoose from 'mongoose'
 import './models/User.js'
 import './services/passport.js'
@@ -11,6 +12,7 @@ import {createProxyMiddleware} from 'http-proxy-middleware'
 // 
 const app = express()
 
+app.use(express.json());
 app.use(
     cookieSession({
         maxAge : 30*24*60*60*1000,
@@ -26,6 +28,7 @@ dotenv.config()
 
 // Routing 
 app.use('/' , authRoutes)
+app.use('/api' , todoRoutes )
 
 const PORT = process.env.PORT || 5000
 app.listen(5000)

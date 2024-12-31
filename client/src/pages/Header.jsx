@@ -13,18 +13,29 @@ const Header = () => {
  
 
   return (
-    <nav className=' bg-orange-600 h-12 items-center '>
-        <div className='flex justify-between items-center px-2 py-4 '>
-            <Link className='text-white text-lg  font-extrabold'>
+    <nav className="bg-orange-600 h-12 flex items-center justify-between px-4">
+    <div className="flex items-center justify-between w-full">
+        <Link to="/" className="text-white text-lg font-extrabold">
             Emaily
-            </Link>
-            <ul className='flex items-center space-x-4'>
+        </Link>
+        {user.userInfo ? (
+            <div className="flex items-center space-x-4">
+                <li className="text-white text-lg font-semibold list-none bg-orange-500 py-1 px-3 rounded-md shadow-md">
+                    {user.userInfo.userName}
+                </li>
+            </div>
+        ) : (
+            <ul className="flex items-center space-x-4">
                 <li>
-                    <Link to='http://localhost:5000/auth/google' className='text-white'>Login With Google</Link>
+                    <Link to="http://localhost:5000/auth/google" className="text-white hover:underline">
+                        Login With Google
+                    </Link>
                 </li>
             </ul>
-        </div>
-    </nav>
+        )}
+    </div>
+</nav>
+
   )
 }
 

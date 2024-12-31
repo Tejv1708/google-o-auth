@@ -7,10 +7,11 @@ import Dashboard from './pages/Dashboard'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { fetchUser } from './features/Auth/authSlice'
+import CreateTodo from './pages/CreateTodo'
+
 function App() {
 
   const dispatch = useDispatch()
-
   useEffect(() => {
     dispatch(fetchUser())
   } , [dispatch])
@@ -22,6 +23,9 @@ function App() {
   <Route  element = {<Header/>} path='/'/>
   <Route element = {<Survey/>} path = '/surveys'/>
   <Route element = {<Dashboard/>} path='/dashboard'/>
+  <Route element = {<Landing/>} path='/landing' >
+  </Route>
+  <Route element = {<CreateTodo/>} path='/landing/createTodo'/>
  </Routes>
 </div>
   )
