@@ -11,10 +11,18 @@ import cors from "cors";
 import { createProxyMiddleware } from "http-proxy-middleware";
 //
 const app = express();
+app.use(express.json());
+
+app.use(
+  cors({
+    origin: "http://localhost:5173/",
+    methods: "GET POST PUT DELETE",
+    credentials: true,
+  })
+);
 
 app.use(bodyParser.json());
 
-app.use(express.json());
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -24,13 +32,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(
-  cors({
-    origin: "http://localhost:5173/",
-    methods: "GET POST PUT DELETE",
-    credentials: true,
-  })
-);
 
 dotenv.config();
 
